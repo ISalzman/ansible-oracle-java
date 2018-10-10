@@ -1,0 +1,33 @@
+---
+# Fetches .rpm, .tar.gz or .dmg files directly from user defined mirror
+
+- name: Precondition - java_mirror
+  fail: msg="ERROR - Required variable 'java_mirror' missing."
+  when: java_mirror is not defined
+
+- name: Download JDK from mirror (RPM)
+  get_url:
+    url: "{{ java_mirror }}"
+    dest: "{{ java_download_path }}/{{ jdk_file_name }}.rpm"
+    force: yes
+  register: jdk_download_response
+  ignore_errors: yes
+  when: use_rpm
+
+- name: Download JDK from mirror (Gzipped Tarball)
+  get_url:
+    url: "{{ java_mirror }}"
+    dest: "{{ java_download_path }}/{{ jdk_file_name }}.tar.gz"
+    force: yes
+  register: jdk_download_response
+  ignore_errors: yes
+  when: use_tarball
+
+- name: Download JDK from mirror (macOS dmg)
+  get_url:
+    url: "{{ java_mirror }}"
+    dest: "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
+    force: yes
+  register: jdk_download_response
+  ignore_errors: yes
+  when: use_dmg

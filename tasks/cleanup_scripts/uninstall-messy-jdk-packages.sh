@@ -1,8 +1,5 @@
 #!/bin/bash
-# simple script to uninstall messy packages provided by Oracle(Sun) JDK;
-# esp. sun-javadb series.
-#
-
+# Simple script to uninstall messy packages provided by Oracle(Sun) JDK especially sun-javadb series
 
 messy_packages=(
   'sun-javadb-core'
@@ -13,11 +10,10 @@ messy_packages=(
   'sun-javadb-common'
 );
 
-
 for pkg in "${messy_packages[@]}"
 do
-  echo $pkg
-  rpm -e $pkg
+  echo ${pkg}
+  rpm -e ${pkg}
 done
 
 exit 0

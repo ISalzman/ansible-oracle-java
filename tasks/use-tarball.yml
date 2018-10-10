@@ -1,11 +1,9 @@
 ---
-# file: use-tarball.yml
-# install Oracle JDK 1.x on distributions other than the CentOS/RHEL family
+# Install Oracle JDK 1.x on distributions other than the CentOS/RHEL family
 #
 # See: https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html
-#
 
-- name: mkdir for Java
+- name: Make directory for Java
   file:
     path: "{{ java_install_dir }}"
     state: directory
@@ -14,7 +12,7 @@
     mode: "u=rwx,go=rx"
   become: yes
 
-- name: mkdir for specific Java version
+- name: Make directory for specific Java version
   file:
     path: "{{ java_install_dir }}/jdk{{ jdk_version }}"
     state: directory
@@ -24,9 +22,9 @@
   become: yes
   when: java_version == 8
 
-- name: install JDK via tarball file
+- name: Install JDK via tarball file
   unarchive:
-    src: "{{ java_download_path }}/{{ jdk_tarball_file }}.tar.gz"
+    src: "{{ java_download_path }}/{{ jdk_file_name }}.tar.gz"
     dest: "{{ java_install_dir }}"
     owner: root
     group: root

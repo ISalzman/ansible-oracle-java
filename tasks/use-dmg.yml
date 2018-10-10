@@ -1,14 +1,16 @@
 ---
-# file: use-tarball.yml
-# install Oracle JDK 1.x on Mac OS X
+# Install Oracle JDK 1.x on Mac OS X
 #
-# See: #      https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html
-#
+# Reference: https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html
 
-- name: mount the downloaded dmg
-  shell: hdiutil attach "{{ java_download_path }}/{{ jdk_tarball_file }}.dmg"
+#- name: Mount the downloaded dmg
+#  shell: hdiutil attach "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
+#  when: not java_download_from_mirror_direct
 
-- name: install the pkg file from the dmg
+- name: Mount the downloaded dmg
+  shell: hdiutil attach "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
+
+- name: Install the pkg file from the dmg
   become: yes
   become_method: sudo
   shell: >
