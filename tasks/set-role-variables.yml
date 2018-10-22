@@ -98,7 +98,15 @@
 
 ## JDK 8
 
-- name: Set internal variables for 1.8.0_181
+- name: set internal variables for 1.8.0_191
+  set_fact:
+    jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b12"
+    jdk_tarball_hash: 2787e4a523244c269598db4e85c51e0c
+  when: java_version == 8 and java_subversion == 191
+
+# All versions below are only available for download with an oracle account (not supported by this role)!
+
+- name: set internal variables for 1.8.0_181
   set_fact:
     jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b13"
     jdk_tarball_hash: 96a7b8442fe848ef90c96a2fad6ed6d1
@@ -115,8 +123,6 @@
     jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b11"
     jdk_tarball_hash: 512cd62ec5174c3487ac17c61aaa89e8
   when: java_version == 8 and java_subversion == 171
-
-# All versions below are only available for download with an oracle account (not supported by this role)!
 
 - name: Set internal variables for 1.8.0_161
   set_fact:

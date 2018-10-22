@@ -3,7 +3,7 @@
 # User-configurable defaults
 
 java_version: 8
-java_subversion: 172
+java_subversion: 191
 java_download_path: /tmp
 java_download_from_oracle: true
 java_oracle_mirror: "http://download.oracle.com/otn-pub/java/jdk"
