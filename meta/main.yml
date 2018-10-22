@@ -1,5 +1,4 @@
 ---
-
 galaxy_info:
     author: srsp
     description: Oracle JDK 8/9/10 for CentOS/Debian/Ubuntu/Suse/MacOSX
@@ -15,6 +14,7 @@ galaxy_info:
               - xenial
               - yakkety
               - zesty
+              - bionic
         - name: Debian
           versions:
               - wheezy

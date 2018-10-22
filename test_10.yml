@@ -3,15 +3,13 @@
   become: yes
   become_method: sudo
   tasks:
-    - include: 'tasks/main.yml'
+    - import_tasks: 'tasks/main.yml'
 
-  # vars from defaults/main.yml
+  # Variables from defaults/main.yml
   vars:
     - java_version: 10
-
-    - java_download_path: /tmp
+    - java_download_path: "{{ oracle_java.path }}"
     - java_download_from_oracle: true
     - java_remove_download: false
     - java_mirror: http://download.oracle.com/otn-pub/java
-
-    - java_set_javahome: false
+    - java_set_java_home: false

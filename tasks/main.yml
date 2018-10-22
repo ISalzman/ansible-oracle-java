@@ -1,34 +1,35 @@
 ---
-# file: tasks/main.yml
-# Top-level installer for Oracle JDK.
-#
+# Top-level installer for Oracle JDK
 
-- name: precondition - java_version
-  fail: msg="ERROR - required variable 'java_version' missing."
+- import_tasks: generate_tmp.yml
+
+- name: Precondition - java_version
+  fail: msg="ERROR - Required variable 'java_version' missing."
   when: java_version is not defined
 
-- include: set-role-variables.yml
+- import_tasks: set-role-variables.yml
 
-
-
-- name: install libselinux-python binary for Ansible to work
+- name: Install libselinux-python binary for Ansible to work
   yum: name=libselinux-python state=present
   when: ansible_pkg_mgr == "yum"
 
-- name: copy scripts to server
-  copy: src="../files/check-java-version.sh"  dest="{{ java_download_path }}/"  mode="a+x"
+- name: Copy scripts to server (check-java-version.sh)
+  copy: src="cleanup_scripts/check-java-version.sh" dest="{{ java_download_path }}/" mode="a+x"
 
-- name: check if specific version of Oracle JDK is installed?
-  shell: LC_ALL="en_US.UTF-8"  {{ java_download_path }}/check-java-version.sh  "{{ jdk_version }}"
+- name: Copy scripts to server (delete-messy-rpm-files.sh)
+  copy: src="cleanup_scripts/delete-messy-rpm-files.sh" dest="{{ java_download_path }}/" mode="a+x"
+
+- name: Copy scripts to server (uninstall-messy-jdk-packages.sh)
+  copy: src="cleanup_scripts/uninstall-messy-jdk-packages.sh" dest="{{ java_download_path }}/" mode="a+x"
+
+- name: Check if specific version of Oracle JDK is installed?
+  shell: LC_ALL="en_US.UTF-8" "{{ java_download_path }}/check-java-version.sh" "{{ jdk_version }}"
   register: jdk_info
   changed_when: false
   failed_when: jdk_info.rc > 0
 
-#- debug: var=jdk_info
-
-- include: install.yml
+- import_tasks: install.yml
   when: (jdk_info.stdout|from_json).not_found
 
-- name: delegate to JCE zip installation process
-  include: install_jce.yml
+- import_tasks: install_jce.yml
   when: java_install_jce
