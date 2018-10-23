@@ -3,10 +3,27 @@
 
 #- import_tasks: tasks/generate_tmp/generate_tmp.yml
 
-- name: Set general internal variables for java 8
+## JDK 11
+
+- name: Set general internal variables for java 11
   set_fact:
-    jdk_version: "1.{{ java_version }}.0_{{ java_subversion }}"
-  when: java_version == 8
+    jdk_version: "{{ java_version }}.{{ java_subversion }}"
+  when: java_version == 11
+
+## JDK 10
+
+- name: Set java subversion for java 10
+  set_fact:
+    # JDK 10 is only available in 10.0.2
+    java_subversion: 0.2
+  when: java_version == 10
+
+- name: Set general internal variables for java 10
+  set_fact:
+    jdk_version: "{{ java_version }}.{{ java_subversion }}"
+  when: java_version == 10
+
+## JDK 9
 
 - name: Set Java subversion java 9
   set_fact:
@@ -19,16 +36,13 @@
     jdk_version: "{{ java_version }}.{{ java_subversion }}"
   when: java_version == 9
 
-- name: Set java subversion for java 10
-  set_fact:
-    # JDK 10 is only available in 10.0.2
-    java_subversion: 0.2
-  when: java_version == 10
+## JDK 8
 
-- name: Set general internal variables for java 10
+- name: Set general internal variables for java 8
   set_fact:
-    jdk_version: "{{ java_version }}.{{ java_subversion }}"
-  when: java_version == 10
+    jdk_version: "1.{{ java_version }}.0_{{ java_subversion }}"
+  when: java_version == 8
+
 
 # Architecture & platform-specific variables
 
@@ -77,6 +91,14 @@
   when: ansible_pkg_mgr != "yum" and ansible_pkg_mgr != "zypper" and ansible_os_family == "Darwin"
 
 ## Version-specific variables
+# JDK 11
+
+- name: Set internal variables for 11
+  set_fact:
+    jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+13"
+    jdk_tarball_hash: 90cf5d8f270a4347a95050320eef3fb7
+  when: java_version == 11
+
 # JDK 10
 
 - name: Set internal variables for 10

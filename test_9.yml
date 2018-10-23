@@ -10,7 +10,8 @@
     java_version: 9
     java_download_path: "{{ oracle_java.path }}"
     java_download_from_oracle: true
+    java_oracle_mirror: "http://download.oracle.com/otn-pub/java/jdk"
     java_remove_download: false
     java_install_jce: false
     java_mirror: http://download.oracle.com/otn-pub/java
-    java_set_javahome: false
+    java_set_javahome: true

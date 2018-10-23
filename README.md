@@ -9,7 +9,7 @@ Role name in Ansible Galaxy: **[srsp.oracle-java](https://galaxy.ansible.com/srs
 
 This Ansible role has the following features related to the Oracle JDK:
 
- - Install the latest version of Oracle JDK 8 or 10.
+ - Install the latest version of Oracle JDK 8 or 11.
  - Install the optional Java Cryptography Extensions (JCE). NOTE: This is only for JDK 8, as it is no longer required for any JDK version > 8.
  - Install for CentOS, Debian/Ubuntu, SUSE, and macOS operating systems.
  
@@ -27,7 +27,49 @@ If you prefer OpenJDK, try alternatives such as [geerlingguy.java](https://galax
 
 ### Mandatory variables
 
-None, but it is strongly advised to `java_version: 8` or `java_version: 10`, which would give you the latest version of either one.
+None, but it is strongly advised to `java_version`. You should also set the `java_subversion` for JDKs other than 8.
+
+### JDK 11 
+
+```yaml
+- hosts: all
+
+  roles:
+    - srsp.oracle-java
+
+  vars:
+    - java_version: 11
+    - java_subversion: 0.1
+```
+
+### JDK 9 / 10
+
+JDK 9 and 10 are only available in one version. If you want to use it, set the following vars and provide it as tarball (see next section):
+
+```yaml
+- hosts: all
+
+  roles:
+    - srsp.oracle-java
+
+  vars:
+    - java_version: 9  # or 10
+```
+
+### JDK 8
+
+```yaml
+- hosts: all
+
+  roles:
+    - srsp.oracle-java
+
+  vars:
+    - java_version: 8
+```
+
+If you do not define the `java_subversion` for JDK 8, you will get the latest version.
+
 
 ### Optional variables
 
@@ -89,33 +131,6 @@ No problem! You have to specify the corresponding Java build number in the varia
     - jdk_tarball_hash: 336fa29ff2bb4ef291e347e091f7f4a7
 ```
 
-### JDK 10 variables
-
-If you want to use the latest JDK 10: 
-
-```yaml
-- hosts: all
-
-  roles:
-    - srsp.oracle-java
-
-  vars:
-    - java_version: 10 
-```
-
-### JDK 9 variables
-
-JDK 9 is only available in version 9.0.4. If you want to use it, set the following vars and provide it as tarball (see next section):
-
-```yaml
-- hosts: all
-
-  roles:
-    - srsp.oracle-java
-
-  vars:
-    - java_version: 9 
-```
 
 ## Usage
 
