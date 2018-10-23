@@ -13,8 +13,9 @@ This Ansible role has the following features related to the Oracle JDK:
  - Install the optional Java Cryptography Extensions (JCE). NOTE: This is only for JDK 8, as it is no longer required for any JDK version > 8.
  - Install for CentOS, Debian/Ubuntu, SUSE, and macOS operating systems.
  
- **Attention:** As of April 2018 older versions of JDKs are no longer available publicly on the Oracle website. You need an Oracle account to download these. This role
- does not support downloading roles with an Oracle account. This means, that you can only download the latest version of all JDKs that have not yet reached their EOL with this role!
+ **Attention:** As of April 2018 older versions of JDKs are no longer available publicly on the Oracle website,but you need an Oracle account to download these. 
+ This role
+ does not support downloading these old JDKs. **This means, that you can only download the latest version of all JDKs that have not yet reached their EOL with this role!**
  
 However you can still use this role to install older versions, if you download them and provide them as pre-downloaded file or via http (just define `java_mirror` accordingly).
  
@@ -51,7 +52,7 @@ java_download_from_oracle: true
 # - false: If java_copy_from_local true copies file from `{{ playbook_dir }}/files` on the control machine if java_copy_from_local set to true
 java_download_from_mirror: false
 
-# If you set java_download_from_mirror to true, java_download_from_mirror. Will automatically generate download file name.
+# If you set java_download_from_mirror to true, this mirror will be used. Will automatically generate download file name.
 java_mirror: "https://private-repo.com/java/jdk-8u172-macosx-x64.dmg"
 
 # Whether to copy from a local file instead of Oracle directly
