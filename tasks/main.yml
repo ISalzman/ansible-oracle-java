@@ -14,13 +14,7 @@
   when: ansible_pkg_mgr == "yum"
 
 - name: Copy scripts to server (check-java-version.sh)
-  copy: src="cleanup_scripts/check-java-version.sh" dest="{{ java_download_path }}/" mode="a+x"
-
-- name: Copy scripts to server (delete-messy-rpm-files.sh)
-  copy: src="cleanup_scripts/delete-messy-rpm-files.sh" dest="{{ java_download_path }}/" mode="a+x"
-
-- name: Copy scripts to server (uninstall-messy-jdk-packages.sh)
-  copy: src="cleanup_scripts/uninstall-messy-jdk-packages.sh" dest="{{ java_download_path }}/" mode="a+x"
+  copy: src="check-java-version.sh" dest="{{ java_download_path }}/" mode="a+x"
 
 - name: Check if specific version of Oracle JDK is installed?
   shell: LC_ALL="en_US.UTF-8" "{{ java_download_path }}/check-java-version.sh" "{{ jdk_version }}"

@@ -5,11 +5,11 @@
 # See also: http://java.dzone.com/articles/installing-oracle-java6-ubuntu
 
 - name: Uninstall messy packages to avoid blocking conditions
-  script: "{{ java_download_path }}/uninstall-messy-jdk-packages.sh"
+  script: "cleanup_scripts/uninstall-messy-jdk-packages.sh"
   become: true
 
 - name: Delete messy .rpm files to avoid blocking conditions
-  script: "{{ java_download_path }}/delete-messy-rpm-files.sh {{ java_download_path }}"
+  script: "cleanup_scripts/delete-messy-rpm-files.sh {{ java_download_path }}"
   become: true
 
 - name: Install JDK via RPM file with yum
@@ -34,3 +34,11 @@
       become: true
       when: reg_validate.rc != 0
   when: ansible_pkg_mgr == "zypper"
+
+- name: Uninstall messy packages to avoid blocking conditions
+  script: "cleanup_scripts/uninstall-messy-jdk-packages.sh"
+  become: true
+
+- name: Delete messy .rpm files to avoid blocking conditions
+  script: "cleanup_scripts/delete-messy-rpm-files.sh {{ java_download_path }}"
+  become: true
