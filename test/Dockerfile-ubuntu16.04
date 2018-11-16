@@ -14,7 +14,7 @@ MAINTAINER William Yeh <william.pjyeh@gmail.com>
 # build phase
 #
 
-RUN apt-get install -y unzip
+RUN apt-get install -y gunzip
 
 ENV PLAYBOOK test.yml
 RUN ansible-playbook-wrapper
