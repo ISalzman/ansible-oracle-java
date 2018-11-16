@@ -5,7 +5,7 @@
 
 
 # pull base image
-FROM williamyeh/ansible:ubuntu16.04-onbuild
+FROM ubuntu:16.04
 
 MAINTAINER William Yeh <william.pjyeh@gmail.com>
 
@@ -14,7 +14,7 @@ MAINTAINER William Yeh <william.pjyeh@gmail.com>
 # build phase
 #
 
-RUN apt-get install -y gunzip
+RUN apt-get install -y ansible
 
 ENV PLAYBOOK test.yml
 RUN ansible-playbook-wrapper
