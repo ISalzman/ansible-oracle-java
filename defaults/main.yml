@@ -5,11 +5,13 @@
 java_version: 8
 java_subversion: 191
 java_download_path: /tmp
-java_download_from_oracle: true
-java_oracle_mirror: "http://download.oracle.com/otn-pub/java/jdk"
-java_download_from_mirror: false
-java_mirror: "https://private-mirror/jdk/jdk-8u172-macosx-x64.dmg"
-java_copy_from_local: false
+
+# Possible values: 'oracle', 'mirror' or 'local'
+java_download_from: oracle
+
+# If you download from a mirror, provide the complete URL including file name (e.g. "https://private-mirror/jdk/jdk-8u172-macosx-x64.dmg")
+java_mirror: "http://download.oracle.com/otn-pub/java/jdk"
+
 java_remove_download: true
 java_set_java_home: true
 java_install_jce: true

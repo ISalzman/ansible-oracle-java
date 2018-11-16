@@ -10,7 +10,7 @@ Role name in Ansible Galaxy: **[srsp.oracle-java](https://galaxy.ansible.com/srs
 This Ansible role has the following features related to the Oracle JDK:
 
  - Install the latest version of Oracle JDK 8 or 11.
- - Install the optional Java Cryptography Extensions (JCE). NOTE: This is only for JDK 8, as it is no longer required for any JDK version > 8.
+ - Install the optional Java Cryptography Extensions (JCE). Only for JDK 8, as it is no longer needed for any JDK version > 8.
  - Install for CentOS, Debian/Ubuntu, SUSE, and macOS operating systems.
  
  **Attention:** As of April 2018 older versions of JDKs are no longer available publicly on the Oracle website,but you need an Oracle account to download these. 
@@ -27,7 +27,7 @@ If you prefer OpenJDK, try alternatives such as [geerlingguy.java](https://galax
 
 ### Mandatory variables
 
-None, but it is strongly advised to `java_version`. You should also set the `java_subversion` for JDKs other than 8.
+None, but it is strongly advised to set `java_version`. You must set the `java_subversion` for JDKs other than 8.
 
 ### JDK 11 
 
@@ -80,33 +80,26 @@ User-configurable defaults:
 java_version: 8
 
 # Java Subversion
-java_subversion: 172
+java_subversion: 191
 
 # Whether to download Java from from Oracle directly
-# - true: Download from Oracle on-the-fly
-# - false: 
-#     - If java_download_from_mirror true, try to download from java_mirror
-#     - If java_copy_from_local: Copies from `{{ playbook_dir }}/files` on the control machine (without file extension)
-java_download_from_oracle: true
+# - oracle: Download from Oracle website on-the-fly.
+# - mirror: Download from the URL defined in 'java_mirror'.
+# - local: Copies from `{{ playbook_dir }}/files` on the control machine.
+java_download_from: oracle
 
-# If java_download_from_mirror set to *true* download from a mirror instead of Oracle directly
-# - true: Download from mirror
-# - false: If java_copy_from_local true copies file from `{{ playbook_dir }}/files` on the control machine if java_copy_from_local set to true
-java_download_from_mirror: false
-
-# If you set java_download_from_mirror to true, this mirror will be used. Will automatically generate download file name.
-java_mirror: "https://private-repo.com/java/jdk-8u172-macosx-x64.dmg"
-
-# Whether to copy from a local file instead of Oracle directly
-# - true: Copies from `{{ playbook_dir }}/files` on the control machine (without file extension)
-# - false: Doesn't do anything
-java_copy_from_local: false
+# Depending on the value of 'java_download_from' different things happen here:
+# - oracle: You don't need to set it. It is prefilled with the Oracle download mirror.
+# - mirror: You need to set it the mirror you want to download from. You need to set the complete URL including the file, like in the example below.
+# - local: 'java_mirror' is not used, therefore the value is ignored.
+#java_mirror: "https://private-repo.com/java/jdk-8u172-macosx-x64.dmg"
+java_mirror: "http://download.oracle.com/otn-pub/java/jdk"
 
 # Remove temporary downloaded files?
 java_remove_download: true
 
 # Set $JAVA_HOME?
-java_set_java_home: false
+java_set_java_home: true
 
 # Install JCE?
 java_install_jce: false
@@ -119,6 +112,7 @@ For other configurable options, read `tasks/set-role-variables.yml` file; for ex
 No problem! You have to specify the corresponding Java build number in the variables `java_build` and `jdk_tarball_hash` in addition to `java_version` and `java_subversion`, for example:
 
 ```yaml
+# file: playbook.yml
 - hosts: all
 
   roles:
@@ -145,7 +139,7 @@ Set variables in your playbook file.
 Simple example:
 
 ```yaml
-# file: oracle-jdk-playbook.yml
+# file: playbook.yml
 
 - hosts: all
 
@@ -163,7 +157,7 @@ You may want to pre-fetch .rpm, .tar.gz or .dmg files *before the execution of t
 To do this, put the file for your intended system in the `{{ playbook_dir }}/files` directory:
 
 ```yaml
-# file: oracle-jdk-playbook-prefetch.yml
+# file: playbook-prefetch.yml
 
 - hosts: all
 
@@ -172,14 +166,13 @@ To do this, put the file for your intended system in the `{{ playbook_dir }}/fil
 
   vars:
     - java_version: 8
-    - java_download_from_oracle: false
-    - java_copy_from_local: true
+    - java_download_from: local
 ```
 
 ### If running from the command line
 
 ```bash
-ansible-playbook --ask-become-pass oracle-jdk-playbook.yml
+ansible-playbook --ask-become-pass playbook.yml
 ```
 
 ## License

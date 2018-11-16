@@ -74,6 +74,7 @@
     use_rpm: true
     use_tarball: false
     use_dmg: false
+    install_file_extension: rpm
   when: (ansible_pkg_mgr == "yum" or ansible_pkg_mgr == "zypper") and ansible_os_family != 'Darwin'
 
 - name: Set Gzipped Tarball binary
@@ -81,6 +82,7 @@
     use_tarball: true
     use_rpm: false
     use_dmg: false
+    install_file_extension: tar.gz
   when: ansible_pkg_mgr != "yum" and ansible_pkg_mgr != "zypper" and ansible_os_family != "Darwin"
 
 - name: Set dmg binary
@@ -88,6 +90,7 @@
     use_dmg: true
     use_rpm: false
     use_tarball: false
+    install_file_extension: dmg
   when: ansible_pkg_mgr != "yum" and ansible_pkg_mgr != "zypper" and ansible_os_family == "Darwin"
 
 ## Version-specific variables
@@ -204,12 +207,12 @@
 
 - name: Compose URL for downloading file only if necessary1
   set_fact:
-    jdk_file_url: "{{ java_oracle_mirror }}/{{ jdk_version_detail }}/{{ jdk_file_name }}"
+    jdk_file_url: "{{ java_mirror }}/{{ jdk_version_detail }}/{{ jdk_file_name }}"
   when: jdk_version_detail is defined and jdk_tarball_hash is not defined
 
 - name: Compose url for downloading file only if necessary2
   set_fact:
-    jdk_file_url: "{{ java_oracle_mirror }}/{{ jdk_version_detail }}/{{ jdk_tarball_hash }}/{{ jdk_file_name }}"
+    jdk_file_url: "{{ java_mirror }}/{{ jdk_version_detail }}/{{ jdk_tarball_hash }}/{{ jdk_file_name }}"
   when: jdk_version_detail is defined and jdk_tarball_hash is defined
 
 # JCE variables

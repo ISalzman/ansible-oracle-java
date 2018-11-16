@@ -3,10 +3,6 @@
 #
 # Reference: https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html
 
-#- name: Mount the downloaded dmg
-#  shell: hdiutil attach "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
-#  when: not java_download_from_mirror_direct
-
 - name: Mount the downloaded dmg
   shell: hdiutil attach "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
 
@@ -18,5 +14,5 @@
     -pkg "/Volumes/JDK {{ java_version }} Update {{ java_subversion }}/JDK {{ java_version }} Update {{ java_subversion }}.pkg"
     -target /
 
-- name: unmount the downloaded dmg
+- name: Unmount the downloaded dmg
   shell: hdiutil detach "/Volumes/JDK {{ java_version }} Update {{ java_subversion }}"

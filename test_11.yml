@@ -10,10 +10,7 @@
     - java_version: 11
     - java_subversion: 0.1
     - java_download_path: "{{ oracle_java.path }}"
-    - java_download_from_oracle: true
-    - java_oracle_mirror: "http://download.oracle.com/otn-pub/java/jdk"
-    - java_download_from_mirror: false
-    - java_copy_from_local: false
+    - java_download_from: oracle
+    - java_mirror: "http://download.oracle.com/otn-pub/java/jdk"
     - java_remove_download: false
-    - java_mirror: http://download.oracle.com/otn-pub/java
     - java_set_java_home: true

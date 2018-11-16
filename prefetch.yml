@@ -7,9 +7,7 @@
   vars:
     - java_version: 8
     - java_subversion: 172
-    - java_download_from_oracle: false
-    - java_download_from_mirror: false
-    - java_copy_from_local: true
+    - java_download_from: local
 #      Set jdk_file_name if the file name can not be automatically determined
 #    - jdk_file_name: "files/jdk-8u172-macosx-x64.dmg"
     - java_remove_download: false

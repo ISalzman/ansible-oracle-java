@@ -35,13 +35,13 @@
 
 - block:
   - import_tasks: fetch_jce.yml
-    when: java_download_from_oracle
+    when: java_download_from == "oracle"
 
   - name: Copy JCE zip from local
     copy:
       src: "{{ playbook_dir }}/files/{{ jce_zip_file }}"
       dest: "{{ java_download_path }}/{{ jce_zip_file }}"
-    when: not java_download_from_oracle
+    when: java_download_from == "local"
 
   - name: Install unzip
     package: name=unzip state=present

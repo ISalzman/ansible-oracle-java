@@ -4,36 +4,18 @@
 
 - name: Fetch JDK files from Oracle site
   import_tasks: fetch.yml
-  when: java_download_from_oracle
+  when: java_download_from == "oracle"
 
-- block:
-    - name: Precondition - java_mirror
-      fail: msg="ERROR - Required variable 'java_mirror' missing."
-      when: java_mirror is not defined
+- name: Fetch JDK files from alternative mirror
+  import_tasks: fetch_mirror.yml
+  when: java_download_from == "mirror"
 
-    - name: Fetch JDK files from mirror
-      import_tasks: fetch_mirror.yml
-  when: (not java_download_from_oracle or not jdk_download_response.changed) and java_download_from_mirror
+- name: Fetch JDK file from local file system
+  copy:
+    src: "{{ playbook_dir }}/files/{{ jdk_file_name }}.{{ install_file_extension }}"
+    dest: "{{ java_download_path }}/{{ jdk_file_name }}.{{ install_file_extension }}"
+  when: java_download_from == "local"
 
-- block:
-    - name: Copy RPM from local
-      copy:
-        src: "{{ playbook_dir }}/files/{{ jdk_file_name }}.rpm"
-        dest: "{{ java_download_path }}/{{ jdk_file_name }}.rpm"
-      when: use_rpm
-
-    - name: Copy tarball from local
-      copy:
-        src: "{{ playbook_dir }}/files/{{ jdk_file_name }}.tar.gz"
-        dest: "{{ java_download_path }}/{{ jdk_file_name }}.tar.gz"
-      when: use_tarball
-
-    - name: Copy .dmg from local
-      copy:
-        src: "{{ playbook_dir }}/files/{{ jdk_file_name }}.dmg"
-        dest: "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
-      when: use_dmg
-  when: (not java_download_from_oracle or not jdk_download_response.changed) and java_copy_from_local
 
 - name: Delegate to RPM installation process
   import_tasks: use-rpm.yml
