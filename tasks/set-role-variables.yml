@@ -1,8 +1,6 @@
 ---
 # Set necessary role variables
 
-#- import_tasks: tasks/generate_tmp/generate_tmp.yml
-
 ## JDK 11
 
 - name: Set general internal variables for java 11
@@ -220,15 +218,21 @@
 - name: Set JCE zip file variables for Java 8
   set_fact:
     jce_zip_file: "jce_policy-{{ java_version }}.zip"
-  when: java_version == 8
+  when: java_version == 8 and java_subversion < 161
 
-- name: Set JCE variables for Java 8
+- name: Set JCE variables for Java 8 for oracle mirror
   set_fact:
-    jce_zip_url: "{{ java_mirror }}/jce/{{ java_version }}/{{ jce_zip_file }}"
+    jce_zip_url: "http://download.oracle.com/otn-pub/java/jce/{{ java_version }}/{{ jce_zip_file }}"
     jce_zip_folder: "UnlimitedJCEPolicyJDK{{ java_version }}"
-  when: java_version == 8
+  when: java_version == 8 and java_subversion < 161 and java_download_from == oracle
 
-# JDKs greater than 8 do not need JCE anymore
+- name: Set JCE variables for Java 8 for alternative mirror
+  set_fact:
+    jce_zip_url: "{{ java_mirror }}/{{ jce_zip_file }}"
+    jce_zip_folder: "UnlimitedJCEPolicyJDK{{ java_version }}"
+  when: java_version == 8 and java_subversion < 161 and java_download_from == mirror
+
+# JDKs greater or equal than 8u161 do not need JCE anymore
 
 - name: Set JCE download file
   set_fact:
@@ -236,7 +240,7 @@
     jce_zip_file:   ""
     jce_zip_url: ""
     jce_zip_folder: ""
-  when: java_version != 8
+  when: (java_version > 8) or (java_version == 8 and java_subversion >= 161)
 
 # Directories
 

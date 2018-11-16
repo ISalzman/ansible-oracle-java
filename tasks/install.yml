@@ -12,7 +12,7 @@
 
 - name: Fetch JDK file from local file system
   copy:
-    src: "{{ playbook_dir }}/files/{{ jdk_file_name }}.{{ install_file_extension }}"
+    src: "files/{{ jdk_file_name }}.{{ install_file_extension }}"
     dest: "{{ java_download_path }}/{{ jdk_file_name }}.{{ install_file_extension }}"
   when: java_download_from == "local"
 

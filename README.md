@@ -10,7 +10,7 @@ Role name in Ansible Galaxy: **[srsp.oracle-java](https://galaxy.ansible.com/srs
 This Ansible role has the following features related to the Oracle JDK:
 
  - Install the latest version of Oracle JDK 8 or 11.
- - Install the optional Java Cryptography Extensions (JCE). Only for JDK 8, as it is no longer needed for any JDK version > 8.
+ - Install the optional Java Cryptography Extensions (JCE). [Only needed for any JDK version <= 8u152.](https://bugs.java.com/view_bug.do?bug_id=JDK-8170157)
  - Install for CentOS, Debian/Ubuntu, SUSE, and macOS operating systems.
  
  **Attention:** As of April 2018 older versions of JDKs are no longer available publicly on the Oracle website,but you need an Oracle account to download these. 
@@ -85,15 +85,15 @@ java_subversion: 191
 # Whether to download Java from from Oracle directly
 # - oracle: Download from Oracle website on-the-fly.
 # - mirror: Download from the URL defined in 'java_mirror'.
-# - local: Copies from `{{ playbook_dir }}/files` on the control machine.
+# - local: Copies from `files` directory of the role or the playbook on the control machine.
 java_download_from: oracle
 
 # Depending on the value of 'java_download_from' different things happen here:
 # - oracle: You don't need to set it. It is prefilled with the Oracle download mirror.
-# - mirror: You need to set it the mirror you want to download from. You need to set the complete URL including the file, like in the example below.
+# - mirror: You need to set it the mirror you want to download from. You need to set the complete URL including the file, like in the example below. If you also want the JCE, you need to set 'jce_zip_url' as well.
 # - local: 'java_mirror' is not used, therefore the value is ignored.
 #java_mirror: "https://private-repo.com/java/jdk-8u172-macosx-x64.dmg"
-java_mirror: "http://download.oracle.com/otn-pub/java/jdk"
+java_mirror: "http://download.oracle.com/otn-pub/java"
 
 # Remove temporary downloaded files?
 java_remove_download: true
@@ -154,7 +154,7 @@ Simple example:
 
 You may want to pre-fetch .rpm, .tar.gz or .dmg files *before the execution of this role*, instead of downloading from Oracle or a mirror
 
-To do this, put the file for your intended system in the `{{ playbook_dir }}/files` directory:
+To do this, put the file for your intended system in the `files` directory:
 
 ```yaml
 # file: playbook-prefetch.yml

@@ -39,7 +39,7 @@
 
   - name: Copy JCE zip from local
     copy:
-      src: "{{ playbook_dir }}/files/{{ jce_zip_file }}"
+      src: "files/{{ jce_zip_file }}"
       dest: "{{ java_download_path }}/{{ jce_zip_file }}"
     when: java_download_from == "local"
 

@@ -1,18 +1,19 @@
 ---
-- hosts: all
-  become: yes
-  become_method: sudo
+- hosts: localhost
+  
   vars_files:
     - 'defaults/main.yml'
+  
   vars:
     - java_version: 8
-    - java_subversion: 172
+    - java_subversion: 181
     - java_download_from: local
 #      Set jdk_file_name if the file name can not be automatically determined
 #    - jdk_file_name: "files/jdk-8u172-macosx-x64.dmg"
     - java_remove_download: false
     - java_download_path: "{{ oracle_java.path }}"
     - java_install_jce: true
+  
   tasks:
     - name: Set role variables
       import_tasks: tasks/set-role-variables.yml
@@ -22,3 +23,4 @@
 
     - name: Fetch JCE files from Oracle site
       import_tasks: tasks/fetch_jce.yml
+      when: java_install_jce

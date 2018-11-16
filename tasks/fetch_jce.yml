@@ -1,7 +1,7 @@
 ---
 # Script for fetching Java Cryptography Extensions (JCE)
 
-- name: get JCE
+- name: Fetch JCE
   get_url:
     url:     "{{ jce_zip_url }}"
     headers: "Cookie:oraclelicense=accept-securebackup-cookie"

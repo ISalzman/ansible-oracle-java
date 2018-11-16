@@ -14,4 +14,4 @@ java_mirror: "http://download.oracle.com/otn-pub/java/jdk"
 
 java_remove_download: true
 java_set_java_home: true
-java_install_jce: true
+java_install_jce: false
