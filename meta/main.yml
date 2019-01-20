@@ -4,7 +4,7 @@ galaxy_info:
     description: Oracle JDK 8/9/10 for CentOS/Debian/Ubuntu/Suse/MacOSX
     license: Apache
 
-    min_ansible_version: 2.0.0
+    min_ansible_version: 2.4.0
 
     platforms:
         - name: Ubuntu
@@ -30,21 +30,23 @@ galaxy_info:
         - name: SLES
           versions:
               - all
-        - name: Darwin
+        - name: MacOSX
           versions:
-              - all
+              - 10.12
+              - 10.13
+              - 10.14
 
     galaxy_tags:
         - oracle
         - java
-        - java development
+        - development
         - jdk
         - jdk8
         - jdk9
         - jdk10
+        - jdk11
         - jvm
         - jce
-        - development
         - system
 
 dependencies: []
