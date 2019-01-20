@@ -17,7 +17,7 @@
   copy: src="check-java-version.sh" dest="{{ java_download_path }}/" mode="a+x"
 
 - name: Check if specific version of Oracle JDK is installed?
-  shell: LC_ALL="en_US.UTF-8" "{{ java_download_path }}/check-java-version.sh" "{{ jdk_version }}"
+  command: "{{ java_download_path }}/check-java-version.sh {{ jdk_version }}"
   register: jdk_info
   changed_when: false
   failed_when: jdk_info.rc > 0

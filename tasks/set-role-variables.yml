@@ -251,7 +251,7 @@
 - name: Set JCE download file
   set_fact:
     java_install_jce: false
-    jce_zip_file:   ""
+    jce_zip_file: ""
     jce_zip_url: ""
     jce_zip_folder: ""
   when: (java_version > 8) or (java_version == 8 and java_subversion >= 161)

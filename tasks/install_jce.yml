@@ -3,7 +3,7 @@
 
 - block:
   - name: Find Java Home in Mac
-    shell: /usr/libexec/java_home
+    command: /usr/libexec/java_home
     register: java_home_cmd
     changed_when: false
 

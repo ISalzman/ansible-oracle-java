@@ -3,6 +3,8 @@
 #
 # @return: JSON string : { "found": true/false, "not_found": true/false }
 
+export LC_ALL="en_US.UTF-8" 
+
 PACKAGE="\"$1\""
 
 line=$(java -version 2>&1  | grep ${PACKAGE} | grep -iv openjdk | wc -l)

@@ -4,7 +4,7 @@
 # Reference: https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html
 
 - name: Mount the downloaded dmg
-  shell: hdiutil attach "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
+  command: hdiutil attach "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
 
 - name: Install the pkg file from the dmg
   become: yes
@@ -15,4 +15,4 @@
     -target /
 
 - name: Unmount the downloaded dmg
-  shell: hdiutil detach "/Volumes/JDK {{ java_version }} Update {{ java_subversion }}"
+  command: hdiutil detach "/Volumes/JDK {{ java_version }} Update {{ java_subversion }}"

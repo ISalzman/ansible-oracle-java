@@ -36,7 +36,7 @@
 
     - name: export JAVA_HOME
       template:
-        src:  ../templates/java_home.sh.j2
+        src: ../templates/java_home.sh.j2
         dest: /etc/profile.d/java_home.sh
         mode: "a+x"
       become: true

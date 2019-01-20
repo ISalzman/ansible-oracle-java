@@ -1,7 +1,7 @@
 ---
 galaxy_info:
     author: srsp
-    description: Oracle JDK 8/9/10 for CentOS/Debian/Ubuntu/Suse/MacOSX
+    description: Oracle JDK 8/9/10/11 for CentOS/Debian/Ubuntu/Suse/MacOSX
     license: Apache
 
     min_ansible_version: 2.4.0
