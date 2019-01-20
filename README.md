@@ -39,7 +39,7 @@ None, but it is strongly advised to set `java_version`. You must set the `java_s
 
   vars:
     - java_version: 11
-    - java_subversion: 0.1
+    - java_subversion: 0.2
 ```
 
 ### JDK 9 / 10
@@ -80,7 +80,7 @@ User-configurable defaults:
 java_version: 8
 
 # Java Subversion
-java_subversion: 191
+java_subversion: 201
 
 # Whether to download Java from from Oracle directly
 # - oracle: Download from Oracle website on-the-fly.

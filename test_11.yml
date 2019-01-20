@@ -8,7 +8,7 @@
   # Variables from defaults/main.yml
   vars:
     - java_version: 11
-    - java_subversion: 0.1
+    - java_subversion: 0.2
     - java_download_path: "{{ oracle_java.path }}"
     - java_download_from: oracle
     - java_mirror: "http://download.oracle.com/otn-pub/java/jdk"

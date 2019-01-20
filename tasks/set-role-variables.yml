@@ -94,11 +94,19 @@
 ## Version-specific variables
 # JDK 11
 
-- name: Set internal variables for 11
+- name: Set internal variables for 11.0.2
+  set_fact:
+    jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+9"
+    jdk_tarball_hash: f51449fcd52f4d52b93a989c5c56ed3c
+  when: java_version == 11
+
+# All 11 versions following the current only available for download with oracle account (not supported by this role)!
+
+- name: Set internal variables for 11.0.1
   set_fact:
     jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+13"
     jdk_tarball_hash: 90cf5d8f270a4347a95050320eef3fb7
-  when: java_version == 11
+  when: java_version == 11 and java_subversion == 0.1
 
 # JDK 10
 
@@ -121,13 +129,19 @@
 
 ## JDK 8
 
+- name: set internal variables for 1.8.0_201
+  set_fact:
+    jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b09"
+    jdk_tarball_hash: 42970487e3af4f5aa5bca3f542482c60
+  when: java_version == 8 and java_subversion == 201
+
+# All versions below are only available for download with an oracle account (not supported by this role)!
+
 - name: set internal variables for 1.8.0_191
   set_fact:
     jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b12"
     jdk_tarball_hash: 2787e4a523244c269598db4e85c51e0c
   when: java_version == 8 and java_subversion == 191
-
-# All versions below are only available for download with an oracle account (not supported by this role)!
 
 - name: set internal variables for 1.8.0_181
   set_fact:
