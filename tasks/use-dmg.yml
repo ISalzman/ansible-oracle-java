@@ -3,16 +3,24 @@
 #
 # Reference: https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html
 
+- name: Set mount point
+  set_fact:
+    mountpoint: "/Volumes/JDK_{{ java_version }}.{{ java_subversion }}"
+
 - name: Mount the downloaded dmg
-  command: hdiutil attach "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
+  command: hdiutil attach -mountpoint {{ mountpoint }} "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
+  args:
+    creates: "{{ mountpoint }}"
 
 - name: Install the pkg file from the dmg
   become: true
   become_method: sudo
   shell: >
     installer
-    -pkg "/Volumes/JDK {{ java_version }} Update {{ java_subversion }}/JDK {{ java_version }} Update {{ java_subversion }}.pkg"
+    -pkg "{{ mountpoint }}/JDK {{ java_version }} Update {{ java_subversion }}.pkg"
     -target /
 
 - name: Unmount the downloaded dmg
-  command: hdiutil detach "/Volumes/JDK {{ java_version }} Update {{ java_subversion }}"
+  command: hdiutil detach "{{ mountpoint }}"
+  args:
+    removes: "{{ mountpoint }}"
