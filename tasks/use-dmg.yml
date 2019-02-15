@@ -7,7 +7,7 @@
   command: hdiutil attach "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
 
 - name: Install the pkg file from the dmg
-  become: yes
+  become: true
   become_method: sudo
   shell: >
     installer

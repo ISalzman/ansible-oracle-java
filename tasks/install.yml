@@ -108,7 +108,7 @@
         path: "{{ java_install_dir }}/{{ java_default_link_name }}"
       when: filecheck and filecheck.stat.exists
 
-  become: yes
+  become: true
   when: ansible_os_family != "Darwin"
 
 - name: Remove temporary downloaded files, if requested

@@ -1,8 +1,6 @@
 ---
 # Top-level installer for Oracle JDK
 
-- import_tasks: generate_tmp.yml
-
 - name: Precondition - java_version
   fail: msg="ERROR - Required variable 'java_version' missing."
   when: java_version is not defined
@@ -21,6 +19,9 @@
   register: jdk_info
   changed_when: false
   failed_when: jdk_info.rc > 0
+
+- import_tasks: generate_tmp.yml
+  when: (jdk_info.stdout|from_json).not_found
 
 - import_tasks: install.yml
   when: (jdk_info.stdout|from_json).not_found

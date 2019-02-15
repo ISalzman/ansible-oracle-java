@@ -9,25 +9,25 @@
   get_url:
     url: "{{ java_mirror }}"
     dest: "{{ java_download_path }}/{{ jdk_file_name }}.rpm"
-    force: yes
+    force: true
   register: jdk_download_response
-  ignore_errors: yes
+  ignore_errors: true
   when: use_rpm
 
 - name: Download JDK from mirror (Gzipped Tarball)
   get_url:
     url: "{{ java_mirror }}"
     dest: "{{ java_download_path }}/{{ jdk_file_name }}.tar.gz"
-    force: yes
+    force: true
   register: jdk_download_response
-  ignore_errors: yes
+  ignore_errors: true
   when: use_tarball
 
 - name: Download JDK from mirror (macOS dmg)
   get_url:
     url: "{{ java_mirror }}"
     dest: "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
-    force: yes
+    force: true
   register: jdk_download_response
-  ignore_errors: yes
+  ignore_errors: true
   when: use_dmg

@@ -1,9 +1,9 @@
 ---
 - hosts: localhost
-  
+
   vars_files:
     - 'defaults/main.yml'
-  
+
   vars:
     - java_version: 8
     - java_subversion: 181
@@ -13,7 +13,7 @@
     - java_remove_download: false
     - java_download_path: "{{ oracle_java.path }}"
     - java_install_jce: true
-  
+
   tasks:
     - name: Set role variables
       import_tasks: tasks/set-role-variables.yml

@@ -51,14 +51,14 @@
     unarchive:
       src: "{{ java_download_path }}/{{ jce_zip_file }}"
       dest: "{{ java_download_path }}/"
-      copy: no
+      copy: false
       creates: "{{ java_download_path }}/{{ jce_zip_folder }}"
 
   - name: Install JCE policies
     copy:
       src: "{{ java_download_path }}/{{ jce_zip_folder }}/{{ item }}"
       dest: "{{ java_home }}/jre/lib/security/{{ item }}"
-      remote_src: True
+      remote_src: true
       mode: 0664
     become: true
     with_items:
