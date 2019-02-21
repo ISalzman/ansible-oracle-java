@@ -19,6 +19,7 @@
     installer
     -pkg "{{ mountpoint }}/JDK {{ java_version }} Update {{ java_subversion }}.pkg"
     -target /
+  when: (jdk_info.stdout|from_json).not_found
 
 - name: Unmount the downloaded dmg
   command: hdiutil detach "{{ mountpoint }}"
