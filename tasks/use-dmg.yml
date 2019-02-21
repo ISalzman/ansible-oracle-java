@@ -15,10 +15,7 @@
 - name: Install the pkg file from the dmg
   become: true
   become_method: sudo
-  shell: >
-    installer
-    -pkg "{{ mountpoint }}/JDK {{ java_version }} Update {{ java_subversion }}.pkg"
-    -target /
+  command: installer -pkg "{{ mountpoint }}/JDK {{ java_version }} Update {{ java_subversion }}.pkg" -target /
   when: (jdk_info.stdout|from_json).not_found
 
 - name: Unmount the downloaded dmg
