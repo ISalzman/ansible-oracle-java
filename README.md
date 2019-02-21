@@ -1,5 +1,4 @@
-srsp.oracle-java for Ansible Galaxy
-============
+# srsp.oracle-java for Ansible Galaxy
 
 [![Build Status](https://travis-ci.org/srsp/ansible-oracle-java.svg?branch=master)](https://travis-ci.org/srsp/ansible-oracle-java) 
 
@@ -178,3 +177,19 @@ ansible-playbook --ask-become-pass playbook.yml
 ## License
 
 Licensed under the Apache License V2.0. See the [LICENSE file](LICENSE) for details.
+
+## Development
+
+### Testing
+
+To test the role use molecule. This will execute the whole test cycle against the default scenario:
+
+```bash
+molecule test
+```
+
+If you want to work on a certain distribution, use something like this:
+
+```bash
+molecule converge --scenario-name opensuse15
+```
