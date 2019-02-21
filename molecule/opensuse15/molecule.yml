@@ -6,17 +6,20 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: centos7
-    image: centos:7
+  - name: opensuse15
+    image: opensuse/leap:15.1
     groups:
-      - centos
+      - suse
 provisioner:
   name: ansible
+  playbooks:
+    converge: ../default/playbook.yml
   lint:
     name: ansible-lint
 scenario:
-  name: default
+  name: opensuse15
 verifier:
   name: testinfra
+  directory: ../default/tests/
   lint:
     name: flake8

@@ -96,6 +96,8 @@
         name: keytool
         link: /usr/bin/keytool
         path: "{{ java_install_dir }}/{{ java_default_link_name }}/bin/keytool"
+      # Does not work for OpenSuse, because there keytool is a slave of java
+      when: ansible_pkg_mgr != "zypper"
 
     - name: Check if "java_sdk" target exists
       stat: path=/usr/lib/jvm/java
