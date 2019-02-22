@@ -18,7 +18,7 @@
     when: ansible_os_family == "RedHat"
 
   - name: Find Java Home in Linux
-    shell: dirname $(dirname $(readlink -e $(which java)))
+    command: dirname $(dirname $(readlink -e $(which java)))
     register: java_home_cmd
     changed_when: false
 
