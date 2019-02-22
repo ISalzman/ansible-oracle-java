@@ -8,8 +8,8 @@
 
     - name: Overwrite vars from defaults
       set_fact:
-        #java_version: 8
-        #java_subversion: 201
+        # java_version: 8
+        # java_subversion: 201
         java_download_path: /tmp/java
         java_install_jce: true
         download_tar: true
