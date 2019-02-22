@@ -63,7 +63,7 @@
 - name: Set Java OS for Mac OS X
   set_fact:
     jdk_os: osx
-  when: ansible_os_family == 'Darwin' and jdk_version == 9
+  when: ansible_os_family == 'Darwin' and jdk_version > 8
 
 # Installation binary
 
