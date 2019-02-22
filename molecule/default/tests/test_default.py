@@ -6,9 +6,13 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-def test_hosts_file(host):
-    f = host.file('/etc/hosts')
+def test_java(host):
 
-    assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
+    assert host.exists("java")
+    assert host.exists("javac")
+    assert host.exists("jar")
+
+    if (host.system_info.distribution != "opensuse-leap"):
+        assert host.exists("keytool")
+
+    assert host.run_test("java -version")
