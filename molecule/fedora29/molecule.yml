@@ -8,6 +8,8 @@ lint:
 platforms:
   - name: fedora29
     image: fedora:29
+    volumes:
+      - /tmp/java:/tmp/java
     groups:
       - fedora
 provisioner:

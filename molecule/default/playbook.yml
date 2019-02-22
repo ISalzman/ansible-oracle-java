@@ -1,5 +1,10 @@
 ---
 - name: Converge
   hosts: all
+
+  vars:
+    - java_download_path: /tmp/java
+    - java_remove_download: false
+
   roles:
     - role: ansible-oracle-java

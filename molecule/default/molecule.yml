@@ -8,6 +8,8 @@ lint:
 platforms:
   - name: centos7
     image: centos:7
+    volumes:
+      - /tmp/java:/tmp/java
     groups:
       - centos
 provisioner:

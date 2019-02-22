@@ -149,11 +149,12 @@ Simple example:
     - java_version: 8
 ```
 
-### (Optionally) pre-fetch .rpm, .tar.gz or .dmg files
+### Install prefetched JDK
 
-You may want to pre-fetch .rpm, .tar.gz or .dmg files *before the execution of this role*, instead of downloading from Oracle or a mirror
+You may want to pre-fetch .rpm, .tar.gz or .dmg files *before the execution of this role*, instead of downloading from Oracle or a mirror. You can download the JDKs manually from the Oracle site, or use a playbook (see next section).
 
-To do this, put the file for your intended system in the `files` directory:
+Put the downloaded JDK file for your intended system in the `files` directory and set `java_download_from` to 
+`local`:
 
 ```yaml
 # file: playbook-prefetch.yml
@@ -167,6 +168,18 @@ To do this, put the file for your intended system in the `files` directory:
     - java_version: 8
     - java_download_from: local
 ```
+
+### Download JDK to local machine (prefetch)
+
+If you just want the JDK on your local machine (e.g. in order to use the files for the 
+molecule test or to upload it to your corporate intranet mirror), you can use the 
+`prefetch.yml` playbook in this role:
+
+```bash
+ansible-playbook prefetch.yml
+```
+
+Change the playbook according to your needs.
 
 ### If running from the command line
 
@@ -182,7 +195,12 @@ Licensed under the Apache License V2.0. See the [LICENSE file](LICENSE) for deta
 
 ### Testing
 
-To test the role use molecule. This will execute the whole test cycle against the default scenario:
+The tests are using `molecule`. Since this role needs a JDK from Oracle, molecule test
+containers will mount `/tmp/java`, so the JDK is persisted on the local machine and still
+available, when the test container has been destroyed. You can also prefetch the installation file 
+and put it to `/tmp/java`.
+
+ This will execute the whole test cycle against the default scenario:
 
 ```bash
 molecule test

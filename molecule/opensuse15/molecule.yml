@@ -8,6 +8,8 @@ lint:
 platforms:
   - name: opensuse15
     image: opensuse/leap:15.1
+    volumes:
+      - /tmp/java:/tmp/java
     groups:
       - suse
 provisioner:

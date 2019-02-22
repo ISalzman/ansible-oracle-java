@@ -8,6 +8,8 @@ lint:
 platforms:
   - name: debian9
     image: debian:9
+    volumes:
+      - /tmp/java:/tmp/java
     groups:
       - debian
 provisioner:
