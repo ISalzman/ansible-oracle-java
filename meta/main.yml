@@ -1,7 +1,7 @@
 ---
 galaxy_info:
     author: srsp
-    description: Oracle JDK 8/9/10/11 for CentOS/Debian/Ubuntu/Suse/MacOSX
+    description: Oracle JDK 8/9/10/11 for CentOS/Fedora/Debian/Ubuntu/Suse/MacOSX
     license: Apache
 
     min_ansible_version: 2.4.0
@@ -20,10 +20,14 @@ galaxy_info:
               - wheezy
               - jessie
               - stretch
+              - buster
         - name: EL
           versions:
               - 6
               - 7
+        - name: fedora
+          versions:
+              - 29
         - name: opensuse
           versions:
               - all
