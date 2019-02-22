@@ -5,3 +5,4 @@
 
 files/jdk-8u181-linux-x64.tar.gz
 molecule/default/tests/__pycache__
+.vscode/settings.json
