@@ -26,11 +26,15 @@
 
     - name: Check if pkg already installed
       shell: rpm -ql $(rpm -qp "{{ java_download_path }}/{{ jdk_file_name }}.{{ install_file_extension }}")
+      args:
+        warn: false
       register: reg_validate
       failed_when: reg_validate.rc != 0 and reg_validate.rc != 1
 
     - name: Install JDK via RPM file with rpm (for zypper)
       command: rpm -ivh --nodeps "{{ java_download_path }}/{{ jdk_file_name }}.{{ install_file_extension }}"
+      args:
+        warn: false
       become: true
       when: reg_validate.rc != 0
   when: ansible_pkg_mgr == "zypper"
