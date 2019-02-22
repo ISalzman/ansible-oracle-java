@@ -8,7 +8,7 @@
     mountpoint: "/Volumes/JDK_{{ java_version }}.{{ java_subversion }}"
 
 - name: Mount the downloaded dmg
-  command: hdiutil attach -mountpoint {{ mountpoint }} "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
+  command: hdiutil attach -mountpoint {{ mountpoint }} "{{ java_download_path }}/{{ jdk_file_name }}.{{ install_file_extension }}"
   args:
     creates: "{{ mountpoint }}"
 

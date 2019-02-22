@@ -24,7 +24,7 @@
 
 - name: Install JDK via tarball file
   unarchive:
-    src: "{{ java_download_path }}/{{ jdk_file_name }}.tar.gz"
+    src: "{{ java_download_path }}/{{ jdk_file_name }}.{{ install_file_extension }}"
     dest: "{{ java_install_dir }}"
     owner: root
     group: root

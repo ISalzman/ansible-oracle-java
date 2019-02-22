@@ -1,26 +1,9 @@
 ---
 # Fetches .rpm, .tar.gz or .dmg files directly from Oracle
 
-- name: Download JDK tarball (as RPM file)
+- name: Download JDK (as {{ install_file_extension }} file)
   get_url:
-    url: "{{ jdk_file_url }}.rpm"
+    url: "{{ jdk_file_url }}.{{ install_file_extension }}"
     headers: {Cookie: "oraclelicense=accept-securebackup-cookie"}
-    dest: "{{ java_download_path }}/{{ jdk_file_name }}.rpm"
+    dest: "{{ java_download_path }}/{{ jdk_file_name }}.{{ install_file_extension }}"
   register: jdk_download_response
-  when: use_rpm
-
-- name: Download JDK tarball (as tar.gz file)
-  get_url:
-    url: "{{ jdk_file_url }}.tar.gz"
-    headers: {Cookie: "oraclelicense=accept-securebackup-cookie"}
-    dest: "{{ java_download_path }}/{{ jdk_file_name }}.tar.gz"
-  register: jdk_download_response
-  when: use_tarball
-
-- name: Download JDK package (as Mac OS X .dmg)
-  get_url:
-    url: "{{ jdk_file_url }}.dmg"
-    headers: {Cookie: "oraclelicense=accept-securebackup-cookie"}
-    dest: "{{ java_download_path }}/{{ jdk_file_name }}.dmg"
-  register: jdk_download_response
-  when: use_dmg

@@ -5,7 +5,9 @@
   fail: msg="ERROR - Required variable 'java_version' missing."
   when: java_version is not defined
 
-- import_tasks: set-role-variables.yml
+- import_tasks: set-platform-vars.yml
+
+- import_tasks: set-jdk-vars.yml
 
 - name: Install libselinux-python binary for Ansible to work
   yum: name=libselinux-python state=present

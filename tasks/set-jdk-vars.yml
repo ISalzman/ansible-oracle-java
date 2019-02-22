@@ -1,6 +1,30 @@
 ---
 # Set necessary role variables
 
+# Directories
+
+- name: Set java installation directory on Debian platforms
+  set_fact:
+    java_install_dir: /usr/lib/jvm
+    java_default_link_name: default-java
+    java_home: /usr/lib/jvm/default-java
+  when: ansible_os_family == "Debian"
+
+- name: Set java installation directory on Mac OS X
+  set_fact:
+    # The Java installation directory on Mac OS X is determined by the package itself.
+    java_install_dir: /no_such_directory
+    java_default_link_name: default
+  when: ansible_os_family == "Darwin"
+
+- name: Set java installation directory on non-Debian platforms
+  set_fact:
+    java_install_dir: /usr/java
+    java_default_link_name: default
+    java_home: /usr/java/default
+  when: ansible_os_family != "Debian" and ansible_os_family != "Darwin"
+
+
 ## JDK 11
 
 - name: Set general internal variables for java 11
@@ -41,55 +65,6 @@
     jdk_version: "1.{{ java_version }}.0_{{ java_subversion }}"
   when: java_version == 8
 
-
-# Architecture & platform-specific variables
-
-- name: Set Java architecture
-  set_fact:
-    jdk_arch: "{{ 'i586' if ansible_architecture == 'i386' else 'x64' }}"
-
-# OS
-
-- name: Set Java OS for Linux
-  set_fact:
-    jdk_os: linux
-  when: ansible_system == 'Linux'
-
-- name: Set Java OS for Mac OS X
-  set_fact:
-    jdk_os: macosx
-  when: ansible_os_family == 'Darwin'
-
-- name: Set Java OS for Mac OS X
-  set_fact:
-    jdk_os: osx
-  when: ansible_os_family == 'Darwin' and jdk_version > 8
-
-# Installation binary
-
-- name: Set RPM binary
-  set_fact:
-    use_rpm: true
-    use_tarball: false
-    use_dmg: false
-    install_file_extension: rpm
-  when: (ansible_pkg_mgr == "yum" or ansible_pkg_mgr == "zypper") and ansible_os_family != 'Darwin'
-
-- name: Set Gzipped Tarball binary
-  set_fact:
-    use_tarball: true
-    use_rpm: false
-    use_dmg: false
-    install_file_extension: tar.gz
-  when: ansible_pkg_mgr != "yum" and ansible_pkg_mgr != "zypper" and ansible_os_family != "Darwin"
-
-- name: Set dmg binary
-  set_fact:
-    use_dmg: true
-    use_rpm: false
-    use_tarball: false
-    install_file_extension: dmg
-  when: ansible_pkg_mgr != "yum" and ansible_pkg_mgr != "zypper" and ansible_os_family == "Darwin"
 
 ## Version-specific variables
 # JDK 11
@@ -202,27 +177,29 @@
     jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b14"
   when: java_version == 8 and java_subversion == 111
 
+### End of java versions
+
 - name: Set internal variables for generic Java version
   set_fact:
     jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b{{ java_build }}"
   when: jdk_version_detail is not defined and java_build is defined
 
-- name: Compose filename only if necessary
+- name: Compose jdk8 filename only if necessary
   set_fact:
     jdk_file_name: "jdk-{{ java_version }}u{{ java_subversion }}-{{ jdk_os }}-{{ jdk_arch }}"
-  when: jdk_file_name is not defined and java_version == 8
+  when: (jdk_file_name is not defined or not jdk_file_name) and java_version == 8
 
-- name: Compose filename only if necessary
+- name: Compose jdk filename only if necessary
   set_fact:
     jdk_file_name: "jdk-{{ java_version }}.{{ java_subversion }}_{{ jdk_os }}-{{ jdk_arch }}_bin"
-  when: jdk_file_name is not defined and java_version != 8
+  when: (jdk_file_name is not defined or not jdk_file_name) and java_version != 8
 
-- name: Compose URL for downloading file only if necessary1
+- name: Compose url for downloading file when file name given
   set_fact:
     jdk_file_url: "{{ java_mirror }}/{{ jdk_version_detail }}/{{ jdk_file_name }}"
   when: jdk_version_detail is defined and jdk_tarball_hash is not defined
 
-- name: Compose url for downloading file only if necessary2
+- name: Compose url for downloading file when hash given
   set_fact:
     jdk_file_url: "{{ java_mirror }}/{{ jdk_version_detail }}/{{ jdk_tarball_hash }}/{{ jdk_file_name }}"
   when: jdk_version_detail is defined and jdk_tarball_hash is defined
@@ -255,26 +232,3 @@
     jce_zip_url: ""
     jce_zip_folder: ""
   when: (java_version > 8) or (java_version == 8 and java_subversion >= 161)
-
-# Directories
-
-- name: Set java installation directory on Debian platforms
-  set_fact:
-    java_install_dir: /usr/lib/jvm
-    java_default_link_name: default-java
-    java_home: /usr/lib/jvm/default-java
-  when: ansible_os_family == "Debian"
-
-- name: Set java installation directory on Mac OS X
-  set_fact:
-    # The Java installation directory on Mac OS X is determined by the package itself.
-    java_install_dir: /no_such_directory
-    java_default_link_name: default
-  when: ansible_os_family == "Darwin"
-
-- name: Set java installation directory on non-Debian platforms
-  set_fact:
-    java_install_dir: /usr/java
-    java_default_link_name: default
-    java_home: /usr/java/default
-  when: ansible_os_family != "Debian" and ansible_os_family != "Darwin"
