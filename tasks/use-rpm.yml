@@ -30,7 +30,7 @@
       failed_when: reg_validate.rc != 0 and reg_validate.rc != 1
 
     - name: Install JDK via RPM file with rpm (for zypper)
-      shell: rpm -ivh --nodeps "{{ java_download_path }}/{{ jdk_file_name }}.rpm"
+      command: rpm -ivh --nodeps "{{ java_download_path }}/{{ jdk_file_name }}.rpm"
       become: true
       when: reg_validate.rc != 0
   when: ansible_pkg_mgr == "zypper"
