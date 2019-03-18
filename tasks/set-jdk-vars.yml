@@ -215,13 +215,19 @@
   set_fact:
     jce_zip_url: "http://download.oracle.com/otn-pub/java/jce/{{ java_version }}/{{ jce_zip_file }}"
     jce_zip_folder: "UnlimitedJCEPolicyJDK{{ java_version }}"
-  when: java_version == 8 and java_subversion < 161 and java_download_from == oracle
+  when:
+    - java_version == 8
+    - java_subversion < 161
+    - java_download_from == "oracle"
 
 - name: Set JCE variables for Java 8 for alternative mirror
   set_fact:
     jce_zip_url: "{{ java_mirror }}/{{ jce_zip_file }}"
     jce_zip_folder: "UnlimitedJCEPolicyJDK{{ java_version }}"
-  when: java_version == 8 and java_subversion < 161 and java_download_from == mirror
+  when:
+    - java_version == 8
+    - java_subversion < 161
+    - java_download_from == "mirror"
 
 # JDKs greater or equal than 8u161 do not need JCE anymore
 
