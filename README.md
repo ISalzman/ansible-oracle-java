@@ -211,3 +211,11 @@ If you want to work on a certain distribution, use something like this:
 ```bash
 molecule converge --scenario-name opensuse15
 ```
+
+If you want to test everything, issue:
+
+```bash
+molecule test --all
+```
+
+This will take a while.

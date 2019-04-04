@@ -3,7 +3,6 @@
 # User-configurable defaults
 
 java_version: 8
-java_subversion: 201
 java_download_path: /tmp
 
 # Possible values: 'oracle', 'mirror' or 'local'
@@ -15,3 +14,11 @@ java_mirror: "http://download.oracle.com/otn-pub/java/jdk"
 java_remove_download: true
 java_set_java_home: true
 java_install_jce: false
+
+# Define the latest subversion for each major release, so we can set it, if the user does not define it.
+java_latest_subversion:
+  8: 201
+  9: 0.4
+  10: 0.2
+  11: 0.2
+  12:
