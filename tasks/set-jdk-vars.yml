@@ -26,10 +26,19 @@
 
 # Handle java subversion
 
+- name: "Log latest subversion"
+  debug:
+    msg: "Latest subversion {{ java_latest_subversion[java_version] }}"
+
 - name: Set java subversion
   set_fact:
     java_subversion: "{{ java_latest_subversion[java_version] }}"
   when: java_subversion is not defined
+
+- name: "Log subversion"
+  debug:
+    msg: "Subversion {{ java_subversion }}"
+
 
 ## JDK 9 and above
 
@@ -53,6 +62,12 @@
 ## Version-specific variables
 # JDK 12
 
+- name: Set internal variables for 12.0.1
+  set_fact:
+    jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+12"
+    jdk_tarball_hash: 69cfe15208a647278a19ef0990eea691
+  when: java_version == 12 and java_subversion | float == 0.1
+
 - name: Set internal variables for 12
   set_fact:
     jdk_version_detail: "{{ java_version }}+33"
@@ -61,11 +76,17 @@
 
 # JDK 11
 
+- name: Set internal variables for 11.0.3
+  set_fact:
+    jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+12"
+    jdk_tarball_hash: 37f5e150db5247ab9333b11c1dddcd30
+  when: java_version == 11 and java_subversion | float == 0.3
+
 - name: Set internal variables for 11.0.2
   set_fact:
     jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+9"
     jdk_tarball_hash: f51449fcd52f4d52b93a989c5c56ed3c
-  when: java_version == 11 and java_subversion | int == 0.2
+  when: java_version == 11 and java_subversion | float == 0.2
 
 # All 11 versions following the current only available for download with oracle account (not supported by this role)!
 
@@ -73,7 +94,7 @@
   set_fact:
     jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+13"
     jdk_tarball_hash: 90cf5d8f270a4347a95050320eef3fb7
-  when: java_version == 11 and java_subversion | int == 0.1
+  when: java_version == 11 and java_subversion | float == 0.1
 
 # JDK 10
 
@@ -96,13 +117,25 @@
 
 ## JDK 8
 
+- name: set internal variables for 1.8.0_212
+  set_fact:
+    jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b10"
+    jdk_tarball_hash: 59066701cf1a433da9770636fbc4c9aa
+  when: java_version == 8 and java_subversion | int == 212
+
+- name: set internal variables for 1.8.0_211
+  set_fact:
+    jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b12"
+    jdk_tarball_hash: 478a62b7d4e34b78b671c754eaaf38ab
+  when: java_version == 8 and java_subversion | int == 211
+
+# All versions below are only available for download with an oracle account (not supported by this role)!
+
 - name: set internal variables for 1.8.0_201
   set_fact:
     jdk_version_detail: "{{ java_version }}u{{ java_subversion }}-b09"
     jdk_tarball_hash: 42970487e3af4f5aa5bca3f542482c60
   when: java_version == 8 and java_subversion | int == 201
-
-# All versions below are only available for download with an oracle account (not supported by this role)!
 
 - name: set internal variables for 1.8.0_191
   set_fact:
