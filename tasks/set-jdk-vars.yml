@@ -60,6 +60,16 @@
   when: java_version == 8
 
 ## Version-specific variables
+
+# JDK 13
+
+- name: Set internal variables for 13.0.1
+  set_fact:
+    jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+9"
+    jdk_tarball_hash: cec27d702aa74d5a8630c65ae61e4305
+  when: java_version == 13 and java_subversion | float == 0.1
+
+
 # JDK 12
 
 - name: Set internal variables for 12.0.2
@@ -81,6 +91,12 @@
   when: java_version == 12 and java_subversion | length == 0
 
 # JDK 11
+
+- name: Set internal variables for 11.0.5
+  set_fact:
+    jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+10"
+    jdk_tarball_hash: e51269e04165492b90fa15af5b4eb1a5
+  when: java_version == 11 and java_subversion | float == 0.5
 
 - name: Set internal variables for 11.0.3
   set_fact:
