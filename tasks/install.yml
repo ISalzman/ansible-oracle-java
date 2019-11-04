@@ -84,12 +84,16 @@
         name: javac
         link: /usr/bin/javac
         path: "{{ java_install_dir }}/{{ java_default_link_name }}/bin/javac"
+      # Does not work for OpenSuse, because there javac is a slave of java
+      when: ansible_pkg_mgr != "zypper"
 
     - name: Alternatives link for "jar"
       alternatives:
         name: jar
         link: /usr/bin/jar
         path: "{{ java_install_dir }}/{{ java_default_link_name }}/bin/jar"
+      # Does not work for OpenSuse, because there jar is a slave of java
+      when: ansible_pkg_mgr != "zypper"
 
     - name: Alternatives link for "keytool"
       alternatives:

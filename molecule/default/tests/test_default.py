@@ -9,10 +9,10 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_java(host):
 
     assert host.exists("java")
-    assert host.exists("javac")
-    assert host.exists("jar")
 
     if (host.system_info.distribution != "opensuse-leap"):
+        assert host.exists("javac")
+        assert host.exists("jar")
         assert host.exists("keytool")
 
     assert host.run_test("java -version")
