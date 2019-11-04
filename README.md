@@ -8,7 +8,7 @@ Role name in Ansible Galaxy: **[srsp.oracle-java](https://galaxy.ansible.com/srs
 
 This Ansible role has the following features related to the Oracle JDK:
 
- - Install the Oracle JDK in versions 8 to 12.
+ - Install the Oracle JDK in versions 8 to 13.
  - Install the optional Java Cryptography Extensions (JCE). [Only needed for any JDK version <= 8u152.](https://bugs.java.com/view_bug.do?bug_id=JDK-8170157)
  - Install for CentOS, Debian/Ubuntu, SUSE, and macOS operating systems.
  
@@ -17,7 +17,7 @@ This role is based on [williamyeh.oracle-java](https://github.com/William-Yeh/an
 If you prefer OpenJDK, try [geerlingguy.java](https://galaxy.ansible.com/geerlingguy/java/).
 
 ## Automatic download from Oracle
-**Attention:** Back in the days this role would download all the JDKs directly from the Oracle site. Oracle cut this possibility step by step. Now you cannot download any version of JDK 8 anymore without Oracle login. For JDK 11 you can only download one older version. JDK 12 can be downloaded at the moment. 
+**Attention:** Back in the days this role would download all the JDKs directly from the Oracle site. Oracle cut this possibility step by step. Now you cannot download any version of JDK 8 anymore without Oracle login. For JDK 11 you can only download one older version. JDK 13 can be downloaded at the moment. 
 
 Since this changes non-deterministically every time Oracle releases a new Java version, you should not rely on it. I recommend downloading the JDK manually and installing it by this role. 
 
@@ -35,7 +35,7 @@ This will try to download the JDK from Oracle and install it.
 
   vars:
     # You should set this:
-    - java_version: 12
+    - java_version: 13
     # You can omit this (role will then use the latest version it knows):
     - java_subversion: 0.1
 ```
