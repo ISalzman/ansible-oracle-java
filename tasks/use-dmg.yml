@@ -12,10 +12,20 @@
   args:
     creates: "{{ mountpoint }}"
 
+- name: Set volume name for JDK 12 and below
+  set_fact:
+    pkg_name: "{{ mountpoint }}/JDK {{ java_version }} Update {{ java_subversion }}.pkg"
+  when: java_version < 13
+
+- name: Set volume name for JDK 13 and up
+  set_fact:
+    pkg_name: "{{ mountpoint }}/JDK {{ java_version }}.{{ java_subversion }}.pkg"
+  when: java_version > 12
+
 - name: Install the pkg file from the dmg
   become: true
   become_method: sudo
-  command: installer -pkg "{{ mountpoint }}/JDK {{ java_version }} Update {{ java_subversion }}.pkg" -target /
+  command: installer -pkg "{{ pkg_name }}" -target /
   when: (jdk_info.stdout|from_json).not_found
 
 - name: Unmount the downloaded dmg
