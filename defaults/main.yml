@@ -15,7 +15,7 @@ java_remove_download: true
 java_set_java_home: true
 java_install_jce: false
 
-# Define the downloadable java subversion. 
+# Define the downloadable java subversion.
 java_latest_subversion:
   8: 211
   9: 0.4
