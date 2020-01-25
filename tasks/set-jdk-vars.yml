@@ -63,11 +63,11 @@
 
 # JDK 13
 
-- name: Set internal variables for 13.0.1
+- name: Set internal variables for 13.0.2
   set_fact:
-    jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+9"
-    jdk_tarball_hash: cec27d702aa74d5a8630c65ae61e4305
-  when: java_version == 13 and java_subversion | float == 0.1
+    jdk_version_detail: "{{ java_version }}.{{ java_subversion }}+8"
+    jdk_tarball_hash: d4173c853231432d94f001e99d882ca7
+  when: java_version == 13 and java_subversion | float == 0.2
 
 
 # JDK 12
