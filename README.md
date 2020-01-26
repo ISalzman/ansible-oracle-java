@@ -1,6 +1,6 @@
 # srsp.oracle-java for Ansible Galaxy
 
-[![Build Status](https://travis-ci.org/srsp/ansible-oracle-java.svg?branch=master)](https://travis-ci.org/srsp/ansible-oracle-java) 
+[![Build Status](https://travis-ci.org/srsp/ansible-oracle-java.svg?branch=master)](https://travis-ci.org/srsp/ansible-oracle-java)
 
 ## Summary
 
@@ -11,15 +11,15 @@ This Ansible role has the following features related to the Oracle JDK:
  - Install the Oracle JDK in versions 8 to 13.
  - Install the optional Java Cryptography Extensions (JCE). [Only needed for any JDK version <= 8u152.](https://bugs.java.com/view_bug.do?bug_id=JDK-8170157)
  - Install for CentOS, Debian/Ubuntu, SUSE, and macOS operating systems.
- 
+
 This role is based on [williamyeh.oracle-java](https://github.com/William-Yeh/ansible-oracle-java), but I wanted more recent Java versions and decided to drop support for older versions.
 
 If you prefer OpenJDK, try [geerlingguy.java](https://galaxy.ansible.com/geerlingguy/java/).
 
 ## Automatic download from Oracle
-**Attention:** Back in the days this role would download all the JDKs directly from the Oracle site. Oracle cut this possibility step by step. Now you cannot download any version of JDK 8 anymore without Oracle login. For JDK 11 you can only download one older version. JDK 13 can be downloaded at the moment. 
+**Attention:** Back in the days this role would download all the JDKs directly from the Oracle site. Oracle cut this possibility step by step. Now you cannot download any version of JDK 8 anymore without Oracle login. For JDK 11 you can only download one older version. JDK 13 can be downloaded at the moment.
 
-Since this changes non-deterministically every time Oracle releases a new Java version, you should not rely on it. I recommend downloading the JDK manually and installing it by this role. 
+Since this changes non-deterministically every time Oracle releases a new Java version, you should not rely on it. I recommend downloading the JDK manually and installing it by this role.
 
 ## Role Variables
 
@@ -37,7 +37,7 @@ This will try to download the JDK from Oracle and install it.
     # You should set this:
     - java_version: 13
     # You can omit this (role will then use the latest version it knows):
-    - java_subversion: 0.1
+    - java_subversion: 0.2
 ```
 
 
@@ -78,8 +78,8 @@ Put the downloaded JDK file for your intended system in the `files` directory an
 
 ### Download JDK to local machine (prefetch)
 
-If you just want the JDK on your local machine (e.g. in order to use the files for the 
-molecule test or to upload it to your corporate intranet mirror), you can use the 
+If you just want the JDK on your local machine (e.g. in order to use the files for the
+molecule test or to upload it to your corporate intranet mirror), you can use the
 `prefetch.yml` playbook in this role:
 
 ```bash
@@ -158,7 +158,7 @@ Licensed under the Apache License V2.0. See the [LICENSE file](LICENSE) for deta
 
 The tests are using `molecule`. Since this role needs a JDK from Oracle, molecule test
 containers will mount `/tmp/java`, so the JDK is persisted on the local machine and still
-available, when the test container has been destroyed. You can also prefetch the installation file 
+available, when the test container has been destroyed. You can also prefetch the installation file
 and put it to `/tmp/java`.
 
  This will execute the whole test cycle against the default scenario:
