@@ -17,7 +17,7 @@
     name: "{{ java_download_path }}/{{ jdk_file_name }}.{{ install_file_extension }}"
     state: present
   become: true
-  when: ansible_pkg_mgr == "yum"
+  when: ansible_pkg_mgr == "yum" or ansible_pkg_mgr == "dnf"
 
 - block:
     - name: Symlink /usr/sbin/update-alternatives to /usr/sbin/alternatives
